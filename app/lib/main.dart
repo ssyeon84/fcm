@@ -15,9 +15,6 @@ void main() async {
   // config load
   await GlobalConfiguration().loadFromAsset("app_setting");
 
-  // firebase core init
-  await Firebase.initializeApp();
-
   runApp(const MyApp());
 }
 

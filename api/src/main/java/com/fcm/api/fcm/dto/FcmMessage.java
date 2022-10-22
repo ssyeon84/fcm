@@ -21,6 +21,7 @@ public class FcmMessage {
         private String token; // 특정 device에 알림을 보내기위해 사용
         private String topic; // 특정 topic에 알림을 보내기 위해 사용
         private Map<String, Object> data;
+        private Android android; // andriod 메세지 규격
     }
 
     @Builder
@@ -30,5 +31,21 @@ public class FcmMessage {
         private String title;
         private String body;
         private String image;
+    }
+
+    @Builder
+    @AllArgsConstructor
+    @Getter
+    public static class Android {
+        private AndroidNotification notification;
+    }
+
+    @Builder
+    @AllArgsConstructor
+    @Getter
+    public static class AndroidNotification {
+        private String channel_id;
+        private String body;
+        private String click_action;
     }
 }

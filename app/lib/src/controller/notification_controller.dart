@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
@@ -11,6 +12,10 @@ import 'package:app/src/page/webview_page.dart';
 void notificationTapBackground(NotificationResponse notificationResponse) async {
   // TODO data?
   Get.log('${notificationResponse}');
+}
+
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  await Firebase.initializeApp();
 }
 
 class NotificationController extends GetxController {
@@ -28,6 +33,10 @@ class NotificationController extends GetxController {
   @override
   void onInit() async {
     super.onInit();
+
+    // firebase core init
+    await Firebase.initializeApp();
+    FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
     // local notification init
     _setupNotification();
