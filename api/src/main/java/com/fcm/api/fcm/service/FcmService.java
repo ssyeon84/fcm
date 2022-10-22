@@ -22,8 +22,7 @@ import java.util.Map;
 public class FcmService {
 
     // TODO Firebase Project ID
-    private String API_URL = "https://fcm.googleapis.com/v1/projects/webview-app-37fdf/messages:send";
-//    private String API_URL = "https://fcm.googleapis.com/v1/projects/buy-now-7ccc0/messages:send";
+    private String API_URL = "https://fcm.googleapis.com/v1/projects/fcm-app-5149c/messages:send";
     private final ObjectMapper objectMapper;
 
     public void sendMessage(String target, FcmSendReq req) throws IOException {
