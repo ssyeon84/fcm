@@ -18,8 +18,5 @@ public class FcmSendReq {
     private String body;
 
     @ApiModelProperty(value = "data", position = 1)
-    private String image;
-
-    @ApiModelProperty(value = "data", position = 1)
     private Map<String, Object> data;
 }

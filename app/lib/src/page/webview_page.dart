@@ -5,7 +5,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:app/src/controller/notification_controller.dart';
-import 'package:app/src/page/notification_page.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class WebviewPage extends StatefulWidget {
@@ -45,27 +44,6 @@ class _WebviewState extends State<WebviewPage> {
                   },
                   javascriptMode: JavascriptMode.unrestricted,
                 ),
-                // 메세지 전송 테스트 버튼
-                Positioned(
-                    right: 80,
-                    bottom: 50,
-                    child: InkWell(
-                      onTap: () {
-                        Get.to(const NotificationPage());
-                      },
-                      child: Container(
-                          width: 50,
-                          height: 50,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: Colors.white,
-                            border: Border.all(color: Colors.black, width: 2),
-                          ),
-                          child: Image.asset(
-                            'assets/images/btn-56-add.png',
-                            width: 28,
-                          )),
-                    )),
                 // 종료버튼
                 Positioned(
                     right: 20,

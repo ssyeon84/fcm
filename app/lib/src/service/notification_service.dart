@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 
 class NotificationSerivce {
 
+  // 현재 사용 안함
   Future<http.Response> sendMessage(String path, {String? target, String? title, String? body, String? imageUrl}) async {
     Map<String, dynamic> params = {
       "target" : target,

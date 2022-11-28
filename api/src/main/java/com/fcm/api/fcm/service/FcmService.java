@@ -27,11 +27,16 @@ public class FcmService {
 
     public void sendMessage(String target, FcmSendReq req) throws IOException {
 
-        String message;  
-        if(target.equals("token")) {
-            message = makeTokenMessage(req.getTarget(), req.getTitle(), req.getBody(), req.getImage(), req.getData());
+        String message;
+
+        Map<String, Object> data = req.getData();
+        data.put("title", req.getTitle());
+        data.put("body", req.getBody());
+
+        if (target.equals("token")) {
+            message = makeTokenMessage(req.getTarget(), data);
         } else {
-            message = makeTopicMessage(req.getTarget(), req.getTitle(), req.getBody(), req.getImage(), req.getData());
+            message = makeTopicMessage(req.getTarget(), data);
         }
 
         OkHttpClient client = new OkHttpClient();
@@ -48,66 +53,34 @@ public class FcmService {
         log.info(response.body().string());
     }
 
-    // 파라미터를 FCM이 요구하는 body 형태로 만들어준다.
-    private String makeTokenMessage(String targetToken, String title, String body, String image, Map<String, Object> data) throws JsonProcessingException {
+    // 토큰 전송
+    private String makeTokenMessage(String targetToken,
+                                    Map<String, Object> data) throws JsonProcessingException {
         FcmMessage fcmMessage = FcmMessage.builder()
                 .message(FcmMessage.Message.builder()
-                    .token(targetToken)
-                    .notification(FcmMessage.Notification.builder()
-                        .title(title)
-                        .body(body)
-                        .image(image)
-                        .build()
-                    )
-                    .android(FcmMessage.Android.builder()
-                        .notification(FcmMessage.AndroidNotification.builder()
-                            .channel_id("fcm-channel-id") // TODO flutter andriod에 설정한 channel id와 동일해야한다
-                            .click_action("FLUTTER_NOTIFICATION_CLICK")
-                            .body(body)
-                            .build()
-                        )
-                        .build()
-                    )
-                    .data(data)
-                    .build()
-                )
+                        .token(targetToken)
+                        .data(data)
+                        .build())
                 .validate_only(false)
                 .build();
         return objectMapper.writeValueAsString(fcmMessage);
     }
 
-    // 파라미터를 FCM이 요구하는 body 형태로 만들어준다.
-    private String makeTopicMessage(String targetToken, String title, String body, String image, Map<String, Object> data) throws JsonProcessingException {
-        data.put("click_action", "FLUTTER_NOTIFICATION_CLICK"); // 고정
+    // 토픽 전송
+    private String makeTopicMessage(String targetToken,
+                                    Map<String, Object> data) throws JsonProcessingException {
         FcmMessage fcmMessage = FcmMessage.builder()
                 .message(FcmMessage.Message.builder()
-                    .topic(targetToken)
-                    .notification(FcmMessage.Notification.builder()
-                        .title(title)
-                        .body(body)
-                        .image(image)
-                        .build()
-                    )
-                    .android(FcmMessage.Android.builder()
-                        .notification(FcmMessage.AndroidNotification.builder()
-                                .channel_id("app-channel-id") // TODO flutter andriod에 설정한 channel id와 동일해야한다
-                                .click_action("FLUTTER_NOTIFICATION_CLICK")
-                                .body(body)
-                                .build()
-                        )
-                        .build()
-                    )
-                    .data(data)
-                    .build()
-                )
+                        .topic(targetToken)
+                        .data(data)
+                        .build())
                 .validate_only(false)
                 .build();
-        System.out.println(fcmMessage);
         return objectMapper.writeValueAsString(fcmMessage);
     }
 
     private String getAccessToken() throws IOException {
-        // TODO Firebase admin json 파일
+        // Firebase admin json 파일
         String firebaseConfigPath = "fcm/webview-fcm.json";
         GoogleCredentials googleCredentials = GoogleCredentials
                 .fromStream(new ClassPathResource(firebaseConfigPath).getInputStream())
