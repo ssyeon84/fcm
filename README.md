@@ -5,8 +5,6 @@
 <img src="https://capsule-render.vercel.app/api?type=soft&color=auto&height=100&section=header&text=FCM%20template&fontSize=50" />
 
 - fcm 연동 프로젝트
-- 더이상의 삽질은 없다 (o゜▽゜)o☆
-- 개인 학습용&기록용 프로젝트 입니다
 <br/><br/><br/>
 <img src="https://capsule-render.vercel.app/api?type=soft&color=auto&height=50&section=header&text=API%20폴더&fontSize=30" />
 
